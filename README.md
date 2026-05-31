@@ -2,8 +2,8 @@
 
 **Real-time network traffic analyzer** built with Rust and [Tauri v2](https://v2.tauri.app).
 
-[![CI](https://github.com/your-username/flownet/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/flownet/actions/workflows/ci.yml)
-[![GitHub Release](https://img.shields.io/github/v/release/your-username/flownet?style=flat-square&logo=github)](https://github.com/your-username/flownet/releases/latest)
+[![CI](https://github.com/LambiKYT/FlowNet/actions/workflows/ci.yml/badge.svg)](https://github.com/LambiKYT/FlowNet/actions/workflows/ci.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/LambiKYT/FlowNet?style=flat-square&logo=github)](https://github.com/LambiKYT/FlowNet/releases/latest)
 ![Rust](https://img.shields.io/badge/Rust-1.81%2B-orange?logo=rust)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
