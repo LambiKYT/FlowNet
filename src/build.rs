@@ -1,19 +1,12 @@
-// build.rs — FlowNet core library build script
-//
-// Automatically locates the Npcap SDK on Windows and links wpcap.lib + Packet.lib.
-// On non-Windows platforms the script is a no-op (libpcap is resolved via pkg-config).
-
 use std::path::Path;
 
 fn main() {
-    // ── Platform guard ──────────────────────────────────────────────────
     let target_os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
     if target_os != "windows" {
         println!("cargo:warning=FlowNet build.rs: skipping Npcap search on non-Windows target ({target_os})");
         return;
     }
 
-    // ── Architecture ────────────────────────────────────────────────────
     let target_arch = std::env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default();
     let lib_subdir = match target_arch.as_str() {
         "x86_64" => "Lib\\x64",
@@ -24,12 +17,6 @@ fn main() {
         ),
     };
 
-    // ── Candidate paths, in priority order ──────────────────────────────
-    // 1. NPCAP_SDK_PATH env var (explicit user override)
-    // 2. Common install locations
-    // 3. ProgramFiles x86 (32-bit SDK on 64-bit OS)
-    // 4. User home directory
-    // 5. Root of C:\
     let candidates: &[&str] = &[
         "NPCAP_SDK_PATH",
         "C:\\Program Files\\Npcap SDK",
@@ -39,9 +26,8 @@ fn main() {
         "C:\\NpcapSDK",
     ];
 
-    // Collect the actual directory path for each candidate.
     let mut checked: Vec<String> = Vec::new();
-    let mut resolved: Option<(String, String)> = None; // (sdk_root, lib_dir)
+    let mut resolved: Option<(String, String)> = None;
 
     for &candidate in candidates {
         let dir = resolve(candidate);
@@ -67,7 +53,6 @@ fn main() {
         checked.push(display);
     }
 
-    // ── Success or panic ────────────────────────────────────────────────
     let (_root, lib_dir) = resolved.unwrap_or_else(|| {
         let mut msg = "\nFlowNet build.rs: Npcap SDK not found.\n".to_string();
         msg.push_str("Checked the following locations:\n");
@@ -89,10 +74,6 @@ fn main() {
     println!("cargo:warning=FlowNet build.rs: linked Npcap SDK from '{lib_dir}'");
 }
 
-/// Turn a candidate string into an absolute path, if it exists on disk.
-///
-/// Special handling for `"NPCAP_SDK_PATH"` — it is resolved from the
-/// corresponding environment variable rather than used as a literal path.
 fn resolve(candidate: &str) -> Option<String> {
     if candidate == "NPCAP_SDK_PATH" {
         return std::env::var("NPCAP_SDK_PATH").ok();

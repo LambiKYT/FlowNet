@@ -1,11 +1,4 @@
 @echo off
-REM local_build_config.bat — Auto-detect Npcap SDK and set NPCAP_SDK_PATH
-REM Called by build_all.bat; can also be run standalone in a developer shell.
-REM
-REM Usage:
-REM   call local_build_config.bat          (sets NPCAP_SDK_PATH for current shell)
-REM   local_build_config.bat --persist     (sets NPCAP_SDK_PATH permanently via setx)
-
 setlocal enabledelayedexpansion
 
 if /I "%1"=="--persist" set PERSIST=1
