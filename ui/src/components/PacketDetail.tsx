@@ -1,5 +1,5 @@
 import type { CapturedPacket } from "../lib/packet";
-import { X, Network, Link, Hash } from "lucide-react";
+import { X, Network, Link, Hash, FileCode } from "lucide-react";
 
 interface Props {
   packet: CapturedPacket;
@@ -47,6 +47,14 @@ export default function PacketDetail({ packet, onClose }: Props) {
             value={new Date(packet.timestamp).toLocaleTimeString()}
           />
         </Section>
+
+        {packet.payload_preview && (
+          <Section icon={<FileCode className="w-4 h-4" />} title="Payload Preview">
+            <div className="font-mono text-[11px] text-gray-300 bg-gray-950 rounded p-2 break-all leading-relaxed">
+              {packet.payload_preview}
+            </div>
+          </Section>
+        )}
       </div>
     </div>
   );

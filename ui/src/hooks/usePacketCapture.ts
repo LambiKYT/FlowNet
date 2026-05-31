@@ -17,6 +17,8 @@ export function usePacketCapture() {
   }, []);
 
   const startCapture = useCallback(async (device: string) => {
+    unlistenRef.current.forEach((u) => u());
+    unlistenRef.current = [];
     setError(null);
     try {
       const unlistenBatch = await listen<CapturedPacket[]>(

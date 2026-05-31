@@ -1,7 +1,7 @@
 @echo off
+set PERSIST_FLAG=0
+if /I "%1"=="--persist" set PERSIST_FLAG=1
 setlocal enabledelayedexpansion
-
-if /I "%1"=="--persist" set PERSIST=1
 
 echo [local_build_config] Scanning for Npcap SDK...
 
@@ -37,16 +37,14 @@ echo [local_build_config] ^> After installing, re-run this script or set:
 echo [local_build_config] ^>   set NPCAP_SDK_PATH=C:\path\to\NpcapSDK
 
 endlocal & (
-  if defined PERSIST (
-    echo [local_build_config] Persisting NPCAP_SDK_PATH is skipped (SDK not found).
-  )
+  echo [local_build_config] Persisting NPCAP_SDK_PATH is skipped (SDK not found).
 )
 exit /b 1
 
 :found
 endlocal & set SDK_ROOT=%SDK_ROOT% & (
   set "NPCAP_SDK_PATH=%SDK_ROOT%"
-  if defined PERSIST (
+  if "%PERSIST_FLAG%"=="1" (
     setx NPCAP_SDK_PATH "%SDK_ROOT%" >nul
     echo [local_build_config] NPCAP_SDK_PATH permanently set to: %SDK_ROOT%
   ) else (

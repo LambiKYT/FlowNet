@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Play, Square, Trash2, Wifi } from "lucide-react";
 
 interface Props {
@@ -16,7 +16,13 @@ export default function CaptureControls({
   onStop,
   onClear,
 }: Props) {
-  const [selected, setSelected] = useState(interfaces[0] ?? "");
+  const [selected, setSelected] = useState("");
+
+  useEffect(() => {
+    if (interfaces.length > 0 && !interfaces.includes(selected)) {
+      setSelected(interfaces[0]);
+    }
+  }, [interfaces, selected]);
 
   return (
     <div className="flex items-center gap-3 p-3 border-b border-gray-800 bg-gray-900">

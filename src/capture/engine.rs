@@ -1,4 +1,4 @@
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::Arc;
 use std::thread::{self, JoinHandle};
 use std::time::Instant;
@@ -18,6 +18,7 @@ pub enum CaptureEvent {
 
 pub struct CaptureEngine {
     running: Arc<AtomicBool>,
+    next_id: Arc<AtomicU64>,
     handle: Option<JoinHandle<()>>,
 }
 
@@ -31,6 +32,7 @@ impl CaptureEngine {
     pub fn new() -> Self {
         Self {
             running: Arc::new(AtomicBool::new(false)),
+            next_id: Arc::new(AtomicU64::new(1)),
             handle: None,
         }
     }
@@ -51,6 +53,7 @@ impl CaptureEngine {
 
         self.running.store(true, Ordering::SeqCst);
         let running = self.running.clone();
+        let next_id = self.next_id.clone();
         let dev_name = device.to_string();
 
         self.handle = Some(thread::spawn(move || {
@@ -85,7 +88,7 @@ impl CaptureEngine {
                     Ok(pkt) => {
                         let parsed = analyzer.analyze(pkt.data);
                         let captured = CapturedPacket {
-                            id: pkt.header.len as u64,
+                            id: next_id.fetch_add(1, Ordering::SeqCst),
                             timestamp: chrono::Utc::now(),
                             header: parsed,
                             payload_preview: payload_preview(pkt.data),

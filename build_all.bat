@@ -87,7 +87,7 @@ echo [build_all] ===========================================================
 echo [build_all]  Build complete!
 echo [build_all]   Frontend: ui\dist\
 echo [build_all]   Rust:     target\release\flownet.exe
-echo [build_all]   Tauri:    src-tauri\target\release\
+echo [build_all]   Rust Tauri: target\release\flownet-tauri.exe
 echo [build_all] ===========================================================
 echo.
 
