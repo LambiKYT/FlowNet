@@ -1,0 +1,16 @@
+[changelog]
+header = "# Changelog\n\nAll notable changes to FlowNet are documented here.\n"
+body = """
+{% for group, commits in commits | group_by(attribute="group") %}
+### {{ group | upper_first }}
+{% for commit in commits %}
+- {% if commit.breaking %}[breaking] {% endif %}{{ commit.message | upper_first }}{% if commit.scope %} ({{ commit.scope }}){% endif %}
+{%- endfor %}
+{% endfor %}
+"""
+trim = true
+footer = ""
+
+[git]
+conventional_commits = true
+filter_unconventional = true
