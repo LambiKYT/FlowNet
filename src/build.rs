@@ -25,11 +25,18 @@ fn main() {
     };
 
     // ── Candidate paths, in priority order ──────────────────────────────
+    // 1. NPCAP_SDK_PATH env var (explicit user override)
+    // 2. Common install locations
+    // 3. ProgramFiles x86 (32-bit SDK on 64-bit OS)
+    // 4. User home directory
+    // 5. Root of C:\
     let candidates: &[&str] = &[
-        "NPCAP_SDK_PATH", // resolved from environment variable
-        "C:\\NpcapSDK",
+        "NPCAP_SDK_PATH",
         "C:\\Program Files\\Npcap SDK",
         "C:\\Program Files\\Npcap",
+        "C:\\Program Files (x86)\\Npcap SDK",
+        "C:\\Program Files (x86)\\Npcap",
+        "C:\\NpcapSDK",
     ];
 
     // Collect the actual directory path for each candidate.

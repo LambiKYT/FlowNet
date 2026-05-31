@@ -5,7 +5,7 @@ Thanks for considering a contribution!
 ## Quick start
 
 ```bash
-git clone https://github.com/your-username/flownet.git
+git clone https://github.com/LambiKYT/FlowNet.git
 cd flownet
 npm --prefix ui install
 cargo tauri dev

@@ -41,7 +41,7 @@ export default function PacketDetail({ packet, onClose }: Props) {
         </Section>
 
         <Section icon={<Hash className="w-4 h-4" />} title="Raw">
-          <Row label="Raw Length" value={`${packet.raw_len} B`} />
+          <Row label="Raw Length" value={`${packet.header.length} B`} />
           <Row
             label="Timestamp"
             value={new Date(packet.timestamp).toLocaleTimeString()}

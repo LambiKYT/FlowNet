@@ -76,7 +76,7 @@ brew install pcap
 ### Build from source
 
 ```bash
-git clone https://github.com/your-username/flownet.git
+git clone https://github.com/LambiKYT/FlowNet.git
 cd flownet
 
 # Build the Rust CLI (standalone packet capture)
